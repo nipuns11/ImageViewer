@@ -5,7 +5,7 @@
 //  Created by nipun sharma on 2015-10-23.
 //  Copyright © 2015 nipun. All rights reserved.
 //
-
+import Social
 import UIKit
 
 class DetailViewController: UIViewController {
@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
         didSet {
             // Update the view.
             self.configureView()
+            
         }
     }
 
@@ -26,6 +27,7 @@ class DetailViewController: UIViewController {
         if let detail = self.detailItem {
             if let imageView = self.detailImageView {
                 imageView.image = UIImage(named: detail)
+                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareTapped")
             }
         }
     }
@@ -46,6 +48,11 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.hidesBarsOnTap = false
+    }
+    
+    func shareTapped() {
+        let vc = UIActivityViewController(activityItems: [detailImageView.image!], applicationActivities: [])
+        presentViewController(vc, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
